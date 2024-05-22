@@ -1,0 +1,13 @@
+# 数据库配置
+SQLALCHEMY_DATABASE_URI= 'sqlite:///mydb.sqlite3'
+SQLALCHEMY_TRACK_MODIFICATIONS= False
+
+# 邮件配置
+MAIL_SERVER= 'smtp.qq.com'
+MAIL_PORT = 465
+MAIL_USE_SSL = True
+MAIL_USE_TLS = False
+MAIL_USERNAME = '718856370@qq.com'
+MAIL_PASSWORD = 'jctockarbsgxbddg'
+MAIL_SUPPRESS_SEND = False
+MAIL_DEFAULT_SENDER = '718856370@qq.com'
