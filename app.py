@@ -18,6 +18,11 @@ def send_async_email(app, msg):
         mail.send(msg)
 
 
+@app.route('/')
+def index():
+    return return_html(200)
+
+
 @app.route('/login', methods=['POST'])
 def login():
     connection = get_connection()
@@ -394,4 +399,4 @@ def delete_like():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
