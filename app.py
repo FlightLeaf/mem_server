@@ -172,6 +172,17 @@ def delete_news():
     connection = get_connection()
     try:
         cursor = connection.cursor()
+        #需要先删除comment和like
+        delete_comment_query = """
+            DELETE FROM comment
+            WHERE news_id = %s;
+        """
+        cursor.execute(delete_comment_query, (data['id'],))
+        delete_like_query = """
+            DELETE FROM user_like_news
+            WHERE news_id = %s;
+        """
+        cursor.execute(delete_like_query, (data['id'],))
         delete_query = """
             DELETE FROM news
             WHERE id = %s;
@@ -282,10 +293,19 @@ def get_news_list():
     try:
         cursor = connection.cursor()
         select_query = """
-            SELECT * FROM news
-            ORDER BY random()
-            LIMIT 10;
-        """
+                    SELECT
+                        id,
+                        title,
+                        description,
+                        imageurl,
+                        to_char(created_at, 'YYYY-MM-DD HH24:MI:SS') AS created_at,
+                        email,
+                        likes,
+                        url
+                    FROM news
+                    ORDER BY random()
+                    LIMIT 10;
+                """
         cursor.execute(select_query)
         news_list = cursor.fetchall()
         return jsonify({
