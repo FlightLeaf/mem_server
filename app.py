@@ -35,6 +35,8 @@ def login():
         """
         cursor.execute(select_query, (data['email'], data['password']))
         result = cursor.fetchone()
+        connection.commit()
+        connection.rollback()
         if result is None:
             return jsonify({'status': 'error', 'message': 'User not found'}), 404
         else:
@@ -71,6 +73,7 @@ def register():
         """
         cursor.execute(insert_query, (data['email'], data['name'], data['password'], data['image'], data['label']))
         connection.commit()
+        connection.rollback()
         return jsonify({'status': 'success', 'message': 'User registered successfully'}), 201
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
@@ -90,6 +93,7 @@ def modify_password():
         """
         cursor.execute(update_query, (data['new_password'], data['email']))
         connection.commit()
+        connection.rollback()
         return jsonify({'status': 'success', 'message': 'Password modified successfully'}), 200
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
@@ -109,6 +113,7 @@ def modify_user_info():
         """
         cursor.execute(update_query, (data['name'], data['image'], data['label'], data['email']))
         connection.commit()
+        connection.rollback()
         return jsonify({'status': 'success', 'message': 'User info modified successfully'}), 200
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
@@ -127,6 +132,8 @@ def get_user_info():
         """
         cursor.execute(select_query, (data['email'],))
         result = cursor.fetchone()
+        connection.commit()
+        connection.rollback()
         if result is None:
             return jsonify({'status': 'error', 'message': 'User not found'}), 404
         else:
@@ -155,6 +162,7 @@ def add_news():
         """
         cursor.execute(insert_query, (data['title'], data['description'], data['imageurl'], data['email'], data['url']))
         connection.commit()
+        connection.rollback()
         return jsonify({'status': 'success', 'message': 'News added successfully'}), 201
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
@@ -189,6 +197,7 @@ def delete_news():
         """
         cursor.execute(delete_query, (data['id'],))
         connection.commit()
+        connection.rollback()
         return jsonify({'status': 'success', 'message': 'News deleted successfully'}), 200
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
@@ -210,6 +219,7 @@ def modify_news():
         cursor.execute(update_query,
                        (data['title'], data['description'], data['imageurl'], data['email'], data['url'], data['id']))
         connection.commit()
+        connection.rollback()
         return jsonify({'status': 'success', 'message': 'News updated successfully'}), 200
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
@@ -229,6 +239,8 @@ def search_news():
         """
         cursor.execute(select_query, ('%' + data['keyword'] + '%', '%' + data['keyword'] + '%'))
         results = cursor.fetchall()
+        connection.commit()
+        connection.rollback()
         return jsonify({
             'status': 'success',
             'message': 'News retrieved successfully',
@@ -263,6 +275,8 @@ def get_news():
         """
         cursor.execute(select_query, (data['id'],))
         news = cursor.fetchone()
+        connection.commit()
+        connection.rollback()
         if news:
             return jsonify({
                 'status': 'success',
@@ -280,6 +294,7 @@ def get_news():
             }), 200
         else:
             return jsonify({'status': 'error', 'message': 'News not found'}), 404
+
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
         # 这里可以记录错误日志
@@ -307,6 +322,8 @@ def get_news_list():
                     LIMIT 10;
                 """
         cursor.execute(select_query)
+        connection.commit()
+        connection.rollback()
         news_list = cursor.fetchall()
         return jsonify({
             'status': 'success',
@@ -341,6 +358,7 @@ def add_comment():
         """
         cursor.execute(insert_query, (data['news_id'], data['user_email'], data['comment']))
         connection.commit()
+        connection.rollback()
         return jsonify({'status': 'success', 'message': 'Comment added successfully'}), 201
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
@@ -359,6 +377,7 @@ def delete_comment():
         """
         cursor.execute(delete_query, (data['news_id'], data['user_email']))
         connection.commit()
+        connection.rollback()
         return jsonify({'status': 'success', 'message': 'Comment deleted successfully'}), 200
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
@@ -386,6 +405,7 @@ def add_like():
         """
         cursor.execute(update_query, (data['news_id'],))
         connection.commit()
+        connection.rollback()
         return jsonify({'status': 'success', 'message': 'Like added successfully'}), 201
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
@@ -412,6 +432,7 @@ def delete_like():
         """
         cursor.execute(update_query, (data['news_id'],))
         connection.commit()
+        connection.rollback()
         return jsonify({'status': 'success', 'message': 'Like deleted successfully'}), 200
     except (psycopg2.DatabaseError, psycopg2.IntegrityError) as e:
         connection.rollback()
@@ -419,4 +440,4 @@ def delete_like():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5008)
