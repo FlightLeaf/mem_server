@@ -41,7 +41,7 @@ def return_html(code):
         <div class="container">
             <h2>感谢您的使用</h2>
             <p>您的验证码是：</p>
-            <div class="verification-code">'''+code+'''
+            <div class="verification-code">'''+str(code)+'''
             </div>
             <p>请将此验证码输入到相应的输入框中，以完成验证。</p>
         </div>
