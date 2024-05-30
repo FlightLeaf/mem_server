@@ -1,7 +1,8 @@
 import time
-import requests
-import pandas as pd
 from json import JSONDecodeError
+
+import pandas as pd
+import requests
 
 # 目标URL
 url = 'https://free.wqwlkj.cn/wqwlapi/select_avatar.php?type=json&select=fengjing'

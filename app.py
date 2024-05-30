@@ -1,8 +1,4 @@
-import psycopg2
-
-import news_api
-from PgSQL.connect import get_connection, release_connection
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_mail import Mail
 
 import config
@@ -11,6 +7,7 @@ from comment_api.comment_delete import comment_delete
 from data import return_html
 from follow_api.follow_add_user import follow_add_user
 from follow_api.follow_delete_user import follow_delete_user
+from follow_api.follow_get_list import follow_get_list
 from like_api.like_add import like_add
 from like_api.like_delete import like_delete
 from news_api.news_add import news_add
@@ -28,7 +25,6 @@ from user_api.user_register import user_register
 
 app = Flask(__name__)
 app.config.from_object(config)
-
 mail = Mail(app)
 
 
@@ -142,6 +138,12 @@ def add_user_follow():
 def delete_user_follow():
     data = request.get_json()
     return follow_delete_user(data)
+
+
+@app.route('/get_follow_list', methods=['POST'])
+def get_follow_list():
+    data = request.get_json()
+    return follow_get_list(data)
 
 
 if __name__ == '__main__':

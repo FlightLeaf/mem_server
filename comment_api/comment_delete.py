@@ -1,7 +1,7 @@
 import psycopg2
+from flask import jsonify
 
 from PgSQL.connect import get_connection, release_connection
-from flask import jsonify
 
 
 def comment_delete(data):

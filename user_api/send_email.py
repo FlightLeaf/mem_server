@@ -1,6 +1,7 @@
+from threading import Thread
+
 from flask import jsonify
 from flask_mail import Message
-from threading import Thread
 
 from data import return_html
 

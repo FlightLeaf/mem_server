@@ -1,9 +1,7 @@
+import random
 import string
 
-import psycopg2
-
 from PgSQL.connect import get_connection
-import random
 
 
 def generate_random_email():
