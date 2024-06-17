@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_mail import Mail
 
 import config
+from book_api.get_data import get_book_data
 from comment_api.comment_add import comment_add
 from comment_api.comment_delete import comment_delete
 from data import return_html
@@ -13,6 +14,7 @@ from like_api.like_delete import like_delete
 from news_api.news_add import news_add
 from news_api.news_delete import news_delete
 from news_api.news_get import news_get
+from news_api.news_get_follow import news_get_follow
 from news_api.news_get_list import news_get_list
 from news_api.news_modify import news_modify
 from news_api.news_search import news_search
@@ -22,6 +24,7 @@ from user_api.user_login import user_login
 from user_api.user_modify_info import user_modify_info
 from user_api.user_modify_password import user_modify_password
 from user_api.user_register import user_register
+from video_api.video_get_recommend import video_get_recommend
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -144,6 +147,22 @@ def delete_user_follow():
 def get_follow_list():
     data = request.get_json()
     return follow_get_list(data)
+
+
+@app.route('/get_news_follow', methods=['POST'])
+def get_news_follow():
+    data = request.get_json()
+    return news_get_follow(data)
+
+
+@app.route('/get_video_recommendation', methods=['POST', 'GET'])
+def get_video_recommendation():
+    return video_get_recommend()
+
+
+@app.route('/get_book_recommendation', methods=['POST', 'GET'])
+def get_book_recommendation():
+    return get_book_data()
 
 
 if __name__ == '__main__':

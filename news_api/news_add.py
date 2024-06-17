@@ -12,7 +12,9 @@ def news_add(data):
                 INSERT INTO news (title, description, imageurl, email, url)
                 VALUES (%s, %s, %s, %s, %s);
             """
-        cursor.execute(insert_query, (data['title'], data['description'], data['imageurl'], data['email'], data['url']))
+        cursor.execute(insert_query, (data['title'], data['description'],
+                                      data['imageurl'], data['email'],
+                                      data['url']))
         connection.commit()
         release_connection(connection=connection)
         return jsonify({'status': 'success', 'message': 'News added successfully'}), 201

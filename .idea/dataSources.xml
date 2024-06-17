@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://139.196.89.94:5433/db3cc04a6054804552adb6870d9d428ddcmem_520am</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="@117.72.69.162" uuid="a554528f-54d2-4361-ac4f-5c93dc25e6bf">
+      <driver-ref>redis</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>jdbc.RedisDriver</jdbc-driver>
+      <jdbc-url>jdbc:redis://117.72.69.162:6379/</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
